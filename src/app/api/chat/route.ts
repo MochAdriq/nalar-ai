@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ai, GEMMA_MODEL } from '@/lib/gemma';
+import { getAIClient, GEMMA_MODEL } from '@/lib/gemma';
 import {
   buildSystemPrompt,
   parseEureka,
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
         parts: [{ text: m.content }],
       }));
 
+    const ai = getAIClient();
     const response = await ai.models.generateContent({
       model: GEMMA_MODEL,
       config: {
